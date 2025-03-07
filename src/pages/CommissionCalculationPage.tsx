@@ -10,7 +10,7 @@ const CommissionCalculationPage = () => {
       
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-gray-900">Commission Calculator</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Commissions Calculator</h1>
           <p className="mt-4 text-lg text-gray-600">
             Calculate your quarterly commission based on attainment and additional quota credits
           </p>
