@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Link } from "react-router-dom";
-import { Calculator, ChartBarIcon, PieChart, DollarSign, Percent, Target, Award, ChevronRight, RefreshCw, BarChart3, UserRound } from "lucide-react";
+import { Calculator, ChartBarIcon, PieChart, DollarSign, Percent, Target, Award, ChevronRight, RefreshCw, BarChart3, UserRound, Check } from "lucide-react";
 
 const Features = () => {
   const featuresList = [{
