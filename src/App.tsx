@@ -14,6 +14,7 @@ import Features from "./pages/Features";
 import HowItWorks from "./pages/HowItWorks";
 import Privacy from "./pages/Privacy";
 import FAQ from "./pages/FAQ";
+import ManagerMode from "./pages/ManagerMode";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/manager-mode" element={<ManagerMode />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

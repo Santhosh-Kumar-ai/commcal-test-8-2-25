@@ -28,6 +28,9 @@ export const Header = () => {
           <Link to="/faq" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
             FAQ
           </Link>
+          <Link to="/manager-mode" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
+            Manager Mode <span className="ml-1 text-xs px-1.5 py-0.5 bg-[#9b87f5]/10 text-[#9b87f5] rounded-full">Beta</span>
+          </Link>
         </nav>
         
         {showGetStartedButton && (

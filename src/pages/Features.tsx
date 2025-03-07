@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Link } from "react-router-dom";
-import { Calculator, ChartBarIcon, PieChart, DollarSign, Percent, Target, Award, ChevronRight, RefreshCw, BarChart3, Check } from "lucide-react";
+import { Calculator, ChartBarIcon, PieChart, DollarSign, Percent, Target, Award, ChevronRight, RefreshCw, BarChart3, UserRound } from "lucide-react";
+
 const Features = () => {
   const featuresList = [{
     title: "Retention Rate Calculator",
@@ -23,7 +24,13 @@ const Features = () => {
     description: "Calculate your quarterly commission based on attainment and any additional quota credits.",
     icon: DollarSign,
     details: ["See quarterly commission breakdowns", "Calculate based on attainment percentages", "Include additional quota credits", "Generate detailed commission reports"]
+  }, {
+    title: "Manager Mode (Beta)",
+    description: "Upload and analyze retention metrics for multiple CSMs at once with our bulk calculation tool.",
+    icon: UserRound,
+    details: ["Download CSV template", "Upload CSM data in bulk", "Calculate metrics for all CSMs at once", "Compare performance across your team"]
   }];
+  
   const additionalFeatures = [{
     title: "Retention Tracking",
     description: "Track your retention performance over time and identify trends.",
@@ -45,6 +52,7 @@ const Features = () => {
     description: "Visualize your performance standing and recognition levels.",
     icon: Award
   }];
+  
   return <div className="min-h-screen bg-white">
       <Header />
       
@@ -133,6 +141,11 @@ const Features = () => {
                     </div>}
                   {index === 3 && <div className="pt-4">
                       <Link to="/commission-calculator" className="inline-flex items-center text-[#8B5CF6] font-medium hover:text-[#7C3AED] transition-colors">
+                        Try this feature <ChevronRight className="ml-1 w-4 h-4" />
+                      </Link>
+                    </div>}
+                  {index === 4 && <div className="pt-4">
+                      <Link to="/manager-mode" className="inline-flex items-center text-[#8B5CF6] font-medium hover:text-[#7C3AED] transition-colors">
                         Try this feature <ChevronRight className="ml-1 w-4 h-4" />
                       </Link>
                     </div>}
@@ -255,6 +268,51 @@ const Features = () => {
                                 <p className="text-xs text-purple-700 mb-1">Quarterly Commission</p>
                                 <p className="text-lg font-bold text-purple-700">₹12,487</p>
                               </div>
+                            </div>
+                          </div>
+                        </div>}
+                      
+                      {index === 4 && <div className="w-full max-w-md bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                          <div className="space-y-6">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-10 h-10 rounded-full bg-[#9b87f5]/10 flex items-center justify-center text-[#9b87f5]">
+                                <UserRound className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <h3 className="font-semibold text-gray-900">Manager Mode</h3>
+                                <p className="text-sm text-gray-500">Team Overview</p>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+                              <div className="grid grid-cols-3 gap-2 text-sm text-gray-500 border-b pb-2">
+                                <div>Rep Name</div>
+                                <div className="text-right">Book ARR</div>
+                                <div className="text-right">Max Churn</div>
+                              </div>
+                              
+                              <div className="grid grid-cols-3 gap-2">
+                                <div className="text-gray-800">John Doe</div>
+                                <div className="text-right text-gray-800">$500,000</div>
+                                <div className="text-right text-gray-800">$30,940</div>
+                              </div>
+                              
+                              <div className="grid grid-cols-3 gap-2">
+                                <div className="text-gray-800">Jane Smith</div>
+                                <div className="text-right text-gray-800">$750,000</div>
+                                <div className="text-right text-gray-800">$32,850</div>
+                              </div>
+                              
+                              <div className="grid grid-cols-3 gap-2">
+                                <div className="text-gray-800">Alex Johnson</div>
+                                <div className="text-right text-gray-800">$1,200,000</div>
+                                <div className="text-right text-gray-800">$60,770</div>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-purple-50 p-3 rounded-lg text-center">
+                              <p className="text-xs text-purple-700 mb-1">Team Total Book ARR</p>
+                              <p className="text-lg font-bold text-purple-700">$2,450,000</p>
                             </div>
                           </div>
                         </div>}
