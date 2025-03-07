@@ -19,14 +19,17 @@ export const Header = () => {
         </Link>
         
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/features" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
-            Features
+          <Link to="/retention-calculator" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
+            Retention Calculator
           </Link>
-          <Link to="/how-it-works" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
-            How It Works
+          <Link to="/expansion-calculator" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
+            Expansion Calculator
           </Link>
-          <Link to="/faq" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
-            FAQ
+          <Link to="/quota-configuration" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
+            Quota Calculator
+          </Link>
+          <Link to="/commission-calculator" className="text-gray-600 hover:text-[#8B5CF6] font-medium text-sm transition-colors">
+            Commission Calculator
           </Link>
         </nav>
         
