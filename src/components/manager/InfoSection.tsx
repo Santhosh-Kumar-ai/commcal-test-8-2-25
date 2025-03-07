@@ -9,8 +9,8 @@ export const InfoSection = () => {
         <Info className="h-5 w-5 text-[#8B5CF6] mt-0.5 flex-shrink-0" />
         <div className="text-sm text-[#7E69AB]">
           <p className="font-medium text-[#6B4E9B]">Understanding These Metrics:</p>
-          <p><strong>Max Quarterly Churn:</strong> The maximum amount of ARR that can churn in a quarter while still achieving the minimum retention target.</p>
-          <p><strong>Quarterly Churn Target:</strong> The target amount of ARR that should churn in a quarter to achieve the maximum retention target.</p>
+          <p><strong>Max Quarterly Churn:</strong> The maximum amount of ARR that can churn in a quarter before attainment drops to 0%.</p>
+          <p><strong>Quarterly Churn Target:</strong> The target amount of ARR that can churn in a quarter to achieve 100% attainment.</p>
         </div>
       </div>
 
