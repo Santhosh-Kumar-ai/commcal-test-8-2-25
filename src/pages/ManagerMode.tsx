@@ -161,7 +161,7 @@ const ManagerMode = () => {
                   <Download className="w-6 h-6" />
                 </div>
                 <h2 className="text-2xl font-semibold text-gray-900">Step 1: Download Template</h2>
-                <p className="text-gray-600">Download our CSV template to input your CSMs' data. The template includes columns for Rep Name, Book Start ARR, and Retention Targets.</p>
+                <p className="text-gray-600">Download our CSV template to input your CSMs' data. </p>
                 <Button onClick={handleFileDownload} className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#9b87f5]">
                   <FileSpreadsheet className="mr-2 h-4 w-4" />
                   Download CSV Template
