@@ -4,11 +4,12 @@ import { Header } from "@/components/Header";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Download, Upload, FileSpreadsheet, UserRound, Calculator, Info } from "lucide-react";
+import { Download, Upload, FileSpreadsheet, UserRound, Calculator, Info, DollarSign, Printer } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { formatCurrency, formatPercentage } from "@/utils/formatters";
+import { formatUSD, formatPercentage } from "@/utils/formatters";
+import * as XLSX from 'xlsx';
 
 interface CSMData {
   id: string;
@@ -119,6 +120,110 @@ const ManagerMode = () => {
     setCsms(calculatedCsms);
     setIsCalculated(true);
     toast.success("Calculations completed for all CSMs");
+  };
+  
+  const handlePrintResults = () => {
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>CSM Retention Metrics</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1200px; margin: 0 auto; padding: 20px; }
+          h1 { color: #8B5CF6; text-align: center; margin-bottom: 30px; }
+          table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+          th { background-color: #f2eeff; text-align: left; padding: 10px; border-bottom: 2px solid #9b87f5; }
+          td { padding: 10px; border-bottom: 1px solid #ddd; }
+          .footer { margin-top: 50px; font-size: 12px; color: #999; text-align: center; }
+          .disclaimer { margin-top: 30px; padding: 10px; border: 1px solid #DDD; background-color: #f9f9f9; font-size: 12px; color: #666; }
+        </style>
+      </head>
+      <body>
+        <h1>CSM Retention Metrics</h1>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Rep Name</th>
+              <th>Book Start ARR</th>
+              <th>Min Retention</th>
+              <th>Max Retention</th>
+              <th>Max Quarterly Churn</th>
+              <th>Quarterly Churn Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${csms.map(csm => `
+              <tr>
+                <td>${csm.name}</td>
+                <td>${formatUSD(csm.bookStartARR)}</td>
+                <td>${formatPercentage(csm.minRetentionTarget)}</td>
+                <td>${formatPercentage(csm.maxRetentionTarget)}</td>
+                <td>${formatUSD(csm.maxQuarterlyChurnAllowed || 0)}</td>
+                <td>${formatUSD(csm.quarterlyChurnTarget || 0)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        
+        <div class="disclaimer">
+          <p><strong>Understanding These Metrics:</strong></p>
+          <p><strong>Max Quarterly Churn:</strong> The maximum amount of ARR that can churn in a quarter while still achieving the minimum retention target.</p>
+          <p><strong>Quarterly Churn Target:</strong> The target amount of ARR that should churn in a quarter to achieve the maximum retention target.</p>
+        </div>
+        
+        <div class="footer">
+          <p>Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const printFrame = document.createElement('iframe');
+    printFrame.style.position = 'fixed';
+    printFrame.style.right = '0';
+    printFrame.style.bottom = '0';
+    printFrame.style.width = '0';
+    printFrame.style.height = '0';
+    printFrame.style.border = '0';
+    document.body.appendChild(printFrame);
+    
+    const frameDoc = printFrame.contentDocument || printFrame.contentWindow?.document;
+    if (frameDoc) {
+      frameDoc.open();
+      frameDoc.write(printContent);
+      frameDoc.close();
+      
+      setTimeout(() => {
+        printFrame.contentWindow?.print();
+        document.body.removeChild(printFrame);
+      }, 500);
+    }
+    
+    toast.success("Preparing print view");
+  };
+  
+  const handleExportToExcel = () => {
+    // Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(
+      csms.map(csm => ({
+        'Rep Name': csm.name,
+        'Book Start ARR': csm.bookStartARR,
+        'Min Retention Target': csm.minRetentionTarget,
+        'Max Retention Target': csm.maxRetentionTarget,
+        'Max Quarterly Churn Allowed': csm.maxQuarterlyChurnAllowed,
+        'Quarterly Churn Target': csm.quarterlyChurnTarget
+      }))
+    );
+    
+    // Create workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "CSM Metrics");
+    
+    // Generate Excel file and trigger download
+    XLSX.writeFile(workbook, "csm_retention_metrics.xlsx");
+    
+    toast.success("Exporting data to Excel");
   };
   
   return (
@@ -234,13 +339,13 @@ const ManagerMode = () => {
                       {csms.map((csm) => (
                         <TableRow key={csm.id}>
                           <TableCell className="font-medium">{csm.name}</TableCell>
-                          <TableCell className="text-right">{formatCurrency(csm.bookStartARR)}</TableCell>
+                          <TableCell className="text-right">{formatUSD(csm.bookStartARR)}</TableCell>
                           <TableCell className="text-right">{formatPercentage(csm.minRetentionTarget)}</TableCell>
                           <TableCell className="text-right">{formatPercentage(csm.maxRetentionTarget)}</TableCell>
                           {isCalculated && (
                             <>
-                              <TableCell className="text-right">{formatCurrency(csm.maxQuarterlyChurnAllowed!)}</TableCell>
-                              <TableCell className="text-right">{formatCurrency(csm.quarterlyChurnTarget!)}</TableCell>
+                              <TableCell className="text-right">{formatUSD(csm.maxQuarterlyChurnAllowed!)}</TableCell>
+                              <TableCell className="text-right">{formatUSD(csm.quarterlyChurnTarget!)}</TableCell>
                             </>
                           )}
                         </TableRow>
@@ -251,14 +356,34 @@ const ManagerMode = () => {
               </div>
               
               {isCalculated && (
-                <div className="rounded-lg bg-[#9b87f5]/10 p-4 flex items-start gap-3">
-                  <Info className="h-5 w-5 text-[#8B5CF6] mt-0.5 flex-shrink-0" />
-                  <div className="text-sm text-[#7E69AB]">
-                    <p className="font-medium text-[#6B4E9B]">Understanding These Metrics:</p>
-                    <p><strong>Max Quarterly Churn:</strong> The maximum amount of ARR that can churn in a quarter while still achieving the minimum retention target.</p>
-                    <p><strong>Quarterly Churn Target:</strong> The target amount of ARR that should churn in a quarter to achieve the maximum retention target.</p>
+                <>
+                  <div className="flex gap-4 items-center">
+                    <Button onClick={handlePrintResults} className="flex items-center gap-2 bg-gradient-to-r from-[#8B5CF6] to-[#9b87f5]">
+                      <Printer className="h-4 w-4" />
+                      Print to PDF
+                    </Button>
+                    <Button onClick={handleExportToExcel} className="flex items-center gap-2 bg-white text-[#8B5CF6] border border-[#D6BCFA] hover:bg-[#F9F7FF]">
+                      <FileSpreadsheet className="h-4 w-4" />
+                      Export to Excel
+                    </Button>
                   </div>
-                </div>
+                  
+                  <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 flex items-start gap-3">
+                    <Info className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <p className="text-sm text-amber-700">
+                      Refreshing the page will erase all data.
+                    </p>
+                  </div>
+                  
+                  <div className="rounded-lg bg-[#9b87f5]/10 p-4 flex items-start gap-3">
+                    <Info className="h-5 w-5 text-[#8B5CF6] mt-0.5 flex-shrink-0" />
+                    <div className="text-sm text-[#7E69AB]">
+                      <p className="font-medium text-[#6B4E9B]">Understanding These Metrics:</p>
+                      <p><strong>Max Quarterly Churn:</strong> The maximum amount of ARR that can churn in a quarter while still achieving the minimum retention target.</p>
+                      <p><strong>Quarterly Churn Target:</strong> The target amount of ARR that should churn in a quarter to achieve the maximum retention target.</p>
+                    </div>
+                  </div>
+                </>
               )}
             </motion.div>
           )}
