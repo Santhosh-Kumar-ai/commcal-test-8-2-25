@@ -569,6 +569,18 @@ const CommissionCalculator = ({ onCalculationComplete }: CommissionCalculatorPro
                   <Trash2 className="w-4 h-4 mr-2" /> Delete All Data
                 </Button>
               </div>
+              
+              <div className="mt-4 p-3 border border-[#D6BCFA] bg-[#F9F7FF] rounded-md text-center">
+                <p className="text-sm text-[#7E69AB]">
+                  All calculations are indicative and need to be verified with relevant financial stakeholders for actuals.
+                </p>
+              </div>
+              
+              <div className="mt-4 p-3 border border-red-200 bg-red-50 rounded-md text-center">
+                <p className="text-sm text-red-500">
+                  Warning: Refreshing the page will erase all data.
+                </p>
+              </div>
             </motion.div>
           </div>
         </TooltipProvider>

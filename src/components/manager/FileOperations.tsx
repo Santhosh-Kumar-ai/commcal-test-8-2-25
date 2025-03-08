@@ -5,13 +5,15 @@ import { Download, Upload, FileSpreadsheet } from "lucide-react";
 import { toast } from "sonner";
 import { CSMData } from "@/types/manager";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 interface FileOperationsProps {
   setCsms: React.Dispatch<React.SetStateAction<CSMData[]>>;
   setIsCalculated: React.Dispatch<React.SetStateAction<boolean>>;
+  scrollToTable: () => void;
 }
 
-export const FileOperations = ({ setCsms, setIsCalculated }: FileOperationsProps) => {
+export const FileOperations = ({ setCsms, setIsCalculated, scrollToTable }: FileOperationsProps) => {
   const handleFileDownload = () => {
     // Create CSV template
     const csvContent = "Rep Name,Book Start ARR,Minimum Retention Target,Maximum Retention Target\nJohn Doe,500000,0.75,0.85\nJane Smith,750000,0.80,0.90";
@@ -77,6 +79,11 @@ export const FileOperations = ({ setCsms, setIsCalculated }: FileOperationsProps
         setIsCalculated(false);
         toast.success(`Uploaded data for ${parsedData.length} CSMs`);
         
+        // Scroll to the table section after successful upload
+        setTimeout(() => {
+          scrollToTable();
+        }, 100);
+        
         // Reset the input
         event.target.value = '';
       } catch (error) {
@@ -102,7 +109,7 @@ export const FileOperations = ({ setCsms, setIsCalculated }: FileOperationsProps
             <Download className="w-6 h-6" />
           </div>
           <h2 className="text-2xl font-semibold text-gray-900">Step 1: Download Template</h2>
-          <p className="text-gray-600">Download our CSV template to input your CSMs'Name, Book Start ARR, and Retention Targets. </p>
+          <p className="text-gray-600">Download our CSV template to input your CSMs' Name, Book Start ARR, and Retention Targets. </p>
           <Button onClick={handleFileDownload} className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#9b87f5]">
             <FileSpreadsheet className="mr-2 h-4 w-4" />
             Download CSV Template

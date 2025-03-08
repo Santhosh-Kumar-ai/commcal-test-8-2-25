@@ -1,8 +1,7 @@
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Header } from "@/components/Header";
 import { Link } from "react-router-dom";
-import { UserRound } from "lucide-react";
 import { motion } from "framer-motion";
 import { CSMData } from "@/types/manager";
 import { FileOperations } from "@/components/manager/FileOperations";
@@ -13,6 +12,13 @@ import { InfoSection } from "@/components/manager/InfoSection";
 const ManagerMode = () => {
   const [csms, setCsms] = useState<CSMData[]>([]);
   const [isCalculated, setIsCalculated] = useState(false);
+  const tableRef = useRef<HTMLDivElement>(null);
+  
+  const scrollToTable = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-[#9b87f5]/5">
@@ -44,12 +50,14 @@ const ManagerMode = () => {
           
           {/* Step 1 & 2: File Operations */}
           <FileOperations 
-            setCsms={setCsms} 
-            setIsCalculated={setIsCalculated} 
+            setCsms={setCsms}
+            setIsCalculated={setIsCalculated}
+            scrollToTable={scrollToTable}
           />
           
           {csms.length > 0 && (
             <motion.div
+              ref={tableRef}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
@@ -72,6 +80,13 @@ const ManagerMode = () => {
               {isCalculated && (
                 <InfoSection />
               )}
+              
+              {/* Page refresh warning */}
+              <div className="mt-4 p-3 border border-red-200 bg-red-50 rounded-md text-center">
+                <p className="text-sm text-red-500">
+                  Warning: Refreshing the page will erase all data.
+                </p>
+              </div>
             </motion.div>
           )}
         </div>
