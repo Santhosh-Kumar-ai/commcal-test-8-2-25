@@ -75,18 +75,19 @@ const ManagerMode = () => {
                 csms={csms} 
                 isCalculated={isCalculated} 
               />
+                  {/* Page refresh warning */}
+               <div className="mt-4 p-3 border border-amber-200 bg-amber-50 rounded-md text-center">
+                 <p className="text-sm text-amber-700">
+                   Warning: Refreshing the page will erase all data.
+                 </p>
+               </div>
               
               {/* Information and Disclaimer */}
               {isCalculated && (
                 <InfoSection />
               )}
               
-            {/* Page refresh warning */}
-               <div className="mt-4 p-3 border border-amber-200 bg-amber-50 rounded-md text-center">
-                 <p className="text-sm text-amber-700">
-                   Warning: Refreshing the page will erase all data.
-                 </p>
-               </div>
+        
             </motion.div>
           )}
         </div>
