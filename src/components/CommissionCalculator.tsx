@@ -572,7 +572,7 @@ const CommissionCalculator = ({ onCalculationComplete }: CommissionCalculatorPro
               
               <div className="mt-4 p-3 border border-[#D6BCFA] bg-[#F9F7FF] rounded-md text-center">
                 <p className="text-sm text-[#7E69AB]">
-                  All calculations are indicative and need to be verified with relevant financial stakeholders for actuals.
+                  All calculations are indicative and needs to be verified with relevant financial stakeholders for actuals.
                 </p>
               </div>
               
