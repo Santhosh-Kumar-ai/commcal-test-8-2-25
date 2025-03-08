@@ -82,8 +82,8 @@ const ManagerMode = () => {
               )}
               
             {/* Page refresh warning */}
-               <div className="mt-4 p-3 border border-red-200 bg-red-50 rounded-md text-center">
-                 <p className="text-sm text-red-500">
+               <div className="mt-4 p-3 border border-amber-200 bg-red-50 rounded-md text-center">
+                 <p className="text-sm text-amber-500">
                    Warning: Refreshing the page will erase all data.
                  </p>
                </div>
