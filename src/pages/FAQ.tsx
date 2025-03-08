@@ -59,10 +59,11 @@ const FAQ = () => {
                     The Retention Rate is calculated using this formula:
                   </p>
                   <p className="font-mono bg-gray-50 p-3 rounded mb-4">
-                    Retention Rate = (Starting ARR - Churn) / Starting ARR
+                    Retention Rate = (1 - (churn $ / start book $))^12 <br/><br/>
+                    This can also be seen as the inverse of your churn rate, annualised to be compared against your annualised retention targets.
                   </p>
                   <p className="mb-4">
-                    For example, if you start with ₹1,000,000 in ARR and lose ₹100,000 to churn, your retention rate would be 90%.
+                    For example, if you start with $1000 in ARR and lose $10 to churn, your churn rate would be 1% and your retention rate would be 99% at a monthly/quarterly runrate. This when annualised (by using ^12) becomes 88.64%.
                   </p>
                   <p>
                     Your attainment is then calculated based on how your actual retention rate compares to your minimum and maximum targets on a linear scale.
@@ -82,7 +83,7 @@ const FAQ = () => {
                     <strong>Maximum Retention Target:</strong> This is the ideal retention rate that represents 100% attainment. Achieving this rate or higher means you've fully met or exceeded your retention goals.
                   </p>
                   <p>
-                    These targets create a scale that determines your attainment percentage. For example, if your minimum target is 80% retention and your maximum is 90%, achieving 85% retention would put you at 50% attainment. This creates a fair system that rewards incremental improvements in retention performance.
+                    These targets create a scale that determines your attainment percentage. For example, if your minimum target is 80% retention and your maximum is 90%, achieving 85% retention would put you at 50% attainment.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -103,7 +104,8 @@ const FAQ = () => {
                     <li>Retention rate of 85% = 0% attainment (at minimum)</li>
                     <li>Retention rate of 90% = 50% attainment (halfway between min and max)</li>
                     <li>Retention rate of 95% = 100% attainment (at maximum)</li>
-                    <li>Retention rate of 97% = 100% attainment (exceeds maximum)</li>
+                    <li>Retention rate of 97% = 120% attainment (exceeds maximum)</li>
+                    <li>Retention rate of 100% = 150% attainment (maximum attainment)</li>
                   </ul>
                   <p>
                     The formula is: Attainment % = (Actual Retention - Minimum Target) / (Maximum Target - Minimum Target) × 100%
@@ -215,8 +217,8 @@ const FAQ = () => {
                   <ul className="list-disc list-inside space-y-2 mb-4">
                     <li>Successfully upselling premium features or services</li>
                     <li>Securing multi-year contracts</li>
-                    <li>Achieving high customer satisfaction scores</li>
-                    <li>Securing referrals that convert to new business</li>
+                    <li>Achieving SPIFFS </li>
+                    <li>Securing referrals/Advocacy that convert to new business</li>
                     <li>Successfully implementing strategic solutions</li>
                   </ul>
                   <p>
@@ -231,22 +233,24 @@ const FAQ = () => {
                 </AccordionTrigger>
                 <AccordionContent className="text-[#7E69AB]">
                   <p className="mb-4">
-                    The Quarterly Churn Target represents the maximum amount of ARR (Annual Recurring Revenue) that can be lost to customer cancellations or downgrades in a quarter while still meeting your retention goal.
+                    The Quarterly Churn Target represents the maximum amount of ARR (Annual Recurring Revenue) that can be lost to customer cancellations or downgrades in a quarter while still meeting your retention attainment of 100%.
                   </p>
                   <p className="mb-4">
                     It's calculated based on your starting ARR and your maximum retention target:
                   </p>
                   <p className="font-mono bg-gray-50 p-3 rounded mb-4">
-                    Quarterly Churn Target = Starting ARR × (1 - Maximum Retention Target)
+                    Quarterly Churn Target = Starting ARR × (1 - (Maximum Retention Target)^(1/12)) <br/><br/>
+                    We use "^(1/12)" to convert the annualised targets to a monthly/quarterly runrate.<br/><br/>
+                    This can also be seen as the inverse of your monthly/quarterly retention target.
                   </p>
                   <p className="mb-4">
                     <strong>Example:</strong> If your starting ARR is $1,000,000 and your maximum retention target is 95%:
                   </p>
                   <p className="mb-4">
-                    Quarterly Churn Target = $1,000,000 × (1 - 0.95) = $50,000
+                    Quarterly Churn Target = $1,000,000 × (1 - ((0.95)^(1/12))) = $4265
                   </p>
                   <p>
-                    This means to achieve your maximum retention goal, you need to keep quarterly churn below $50,000. Exceeding this amount will reduce your retention attainment percentage.
+                    This means to achieve your maximum retention goal, you need to keep quarterly churn below $4265. Exceeding this amount will reduce your retention attainment percentage.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -263,16 +267,18 @@ const FAQ = () => {
                     It's calculated based on your starting ARR and your minimum retention target:
                   </p>
                   <p className="font-mono bg-gray-50 p-3 rounded mb-4">
-                    Maximum Quarterly Churn Allowed = Starting ARR × (1 - Minimum Retention Target)
+                    Maximum Quarterly Churn Allowed = Starting ARR × (1 - ((Minimum Retention Target)^(1/12)) <br/><br/>
+                    We use "^(1/12)" to convert the annualised targets to a monthly/quarterly runrate.<br/><br/>
+                    This can also be seen as the inverse of your monthly/quarterly minimum retention rate target.
                   </p>
                   <p className="mb-4">
-                    <strong>Example:</strong> If your starting ARR is $1,000,000 and your minimum retention target is 85%:
+                    <strong>Example:</strong> If your starting ARR is $1,000,000 and your minimum retention target is 75%:
                   </p>
                   <p className="mb-4">
-                    Maximum Quarterly Churn Allowed = $1,000,000 × (1 - 0.85) = $150,000
+                    Maximum Quarterly Churn Allowed = $1,000,000 × (1 - ((0.75)^(1/12))) = $23688
                   </p>
                   <p>
-                    If quarterly churn exceeds $150,000 in this example, your retention attainment would be 0%. This creates a clear boundary for minimum acceptable performance.
+                    If quarterly churn is equal to or exceeds $23,688 in this example, your retention attainment would be 0%.
                   </p>
                 </AccordionContent>
               </AccordionItem>
