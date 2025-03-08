@@ -570,8 +570,8 @@ const CommissionCalculator = ({ onCalculationComplete }: CommissionCalculatorPro
                 </Button>
               </div>
               
-              <div className="mt-4 p-3 border border-[#FFDA98] bg-[#FFF3CD] rounded-md text-center">
-                <p className="text-sm text-[#856404]">
+              <div className="mt-4 p-3 border border-[#FFE0B2] bg-[#FFF8E1] rounded-md text-center">
+                <p className="text-sm text-[#A1887F]">
                   All calculations are indicative and needs to be verified with relevant financial stakeholders for actuals.
                 </p>
               </div>
